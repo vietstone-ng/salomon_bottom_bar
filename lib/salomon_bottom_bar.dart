@@ -12,7 +12,8 @@ class SalomonBottomBar extends StatelessWidget {
     this.onTap,
     this.selectedItemColor,
     this.unselectedItemColor,
-    this.selectedColorOpacity,
+    // this.selectedColorOpacity,
+    this.selectedItemBackgroundColor,
     this.itemShape = const StadiumBorder(),
     this.margin = const EdgeInsets.all(8),
     this.itemPadding = const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -38,8 +39,12 @@ class SalomonBottomBar extends StatelessWidget {
   /// The color of the icon and text when the item is not selected.
   final Color? unselectedItemColor;
 
-  /// The opacity of color of the touchable background when the item is selected.
-  final double? selectedColorOpacity;
+  // /// The opacity of color of the touchable background when the item is selected.
+  // final double? selectedColorOpacity;
+
+  /// The background color of the selected item. If not provided, it will use
+  /// [selectedItemColor] with opacity 0.1.
+  final Color? selectedItemBackgroundColor;
 
   /// The border shape of each item.
   final ShapeBorder itemShape;
@@ -87,11 +92,16 @@ class SalomonBottomBar extends StatelessWidget {
                       unselectedItemColor ??
                       theme.iconTheme.color;
 
+                  final _backgroundSelectedColor =
+                      selectedItemBackgroundColor ??
+                          _selectedColor.withOpacity(0.1);
+
                   return Material(
                     color: Color.lerp(
-                        _selectedColor.withOpacity(0.0),
-                        _selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
-                        t),
+                      _backgroundSelectedColor.withOpacity(0.0),
+                      _backgroundSelectedColor,
+                      t,
+                    ),
                     shape: itemShape,
                     child: InkWell(
                       onTap: () => onTap?.call(items.indexOf(item)),

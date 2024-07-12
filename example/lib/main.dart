@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBar: SalomonBottomBar(
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
+          selectedItemBackgroundColor: Colors.purple,
           items: [
             /// Home
             SalomonBottomBarItem(
